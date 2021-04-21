@@ -39,5 +39,32 @@ public class JdbcInsert {
 			System.out.println("Boat Already Exist You can Update");
 		}
 	}
+	public static void billInsert(int time, int id, String status) {
+		// TODO Auto-generated method stub
+		String dbURL = "jdbc:mysql://localhost:3306/sample";
+		String username = "root";
+		String password = "root";
+		
+		try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+			
+			String sql = "INSERT INTO bills (time,Boat_ID,Process) VALUES (?, ?, ?)";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1,time);
+			statement.setInt(2, id);
+			statement.setString(3, status);
+			
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("A new Bill Processing.......");
+			}
 
-}
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}		
+	}
+		
+		
+	}
+

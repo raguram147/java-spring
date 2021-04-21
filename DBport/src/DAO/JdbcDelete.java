@@ -25,7 +25,7 @@ public class JdbcDelete {
 		    if (conn != null) {
 		        System.out.println("Connected");
 		    }
-			String sql = "DELETE FROM Boat WHERE id="+num;
+			String sql = "DELETE FROM boat WHERE id="+num;
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			

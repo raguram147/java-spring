@@ -3,9 +3,11 @@ package Controller;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import DAO.Breth;
 import DAO.JdbcDelete;
 import DAO.JdbcInsert;
 import DAO.JdbcSelect;
+import DAO.JdbcUpdate;
 import DAO.ShowBoat;
 import Model.Boat;
 
@@ -80,22 +82,12 @@ public class BTControl {
 				System.out.println("---------------------------");
 				System.out.println("Berthing Bill : Y/N ->");
 				String ch = in.nextLine();
-				
-				
 				if(ch.charAt(0)=='y' ||ch.charAt(0)=='Y' ) {
-					System.out.println("Enter the timing in hours :");
-					int time  = in.nextInt();
-					in.nextLine();
-					billing(Bt, time);
+				Bill.Create(Bt,in);
 				}
-				
 				break;
-			}
-			else {
-				System.out.println("==========x Boat NOT FOUND::INVALID NUMBER x===============");
-			}
 
-		}
+			}}
 		
 		
 	}
@@ -106,19 +98,7 @@ public class BTControl {
 		int num = in.nextInt();
 		in.nextLine();
 		JdbcDelete.DeleteDBOfBoat(num);
-//		ArrayList<Boat> b = getBoats();
-//		int size = b.size();
-//		for(int i = 0 ; i <size ;i++) {
-//			if(b.get(i).getBoatNumber()==num) {
-//				b.remove(i);
-//				break;
-//			}
-//		}
-//		if(size-1 == b.size()) {
-//			System.out.println("Successfully Removed");
-//		}else {
-//			System.out.println("Boat Not Found");
-//		}
+
 	}
 	
 	public static void billing(Boat bt, int time) {

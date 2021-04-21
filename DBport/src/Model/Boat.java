@@ -32,6 +32,9 @@ public class Boat {
 			this.boatNumber = boatNumber;
 			this.boatCapacity = boatCapacity;
 		}
+		public Boat() {
+			// TODO Auto-generated constructor stub
+		}
 		
 		
 

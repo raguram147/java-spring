@@ -14,8 +14,12 @@ public class CheckBoat {
 	try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 		String sql = "SELECT Boat_name, ID FROM Boat where id="+num;
 		PreparedStatement statement = conn.prepareStatement(sql);
-
-//		1
+		boolean result=statement.execute();
+		if(result==true) {
+			return 1;
+		}
+		
+//		
 //		else {
 //			return 0;
 //		}

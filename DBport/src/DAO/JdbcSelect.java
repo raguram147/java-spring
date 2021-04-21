@@ -6,8 +6,16 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import Controller.Bill;
+import Controller.Receipt;
+import Model.Boat;
+import Model.bills;
 
 public class JdbcSelect {
+	public static int t,ca,bid1,b;
+	static String bname,st;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost:3306/sample";
 
@@ -26,7 +34,7 @@ public class JdbcSelect {
 	      System.out.println("Connecting to a selected database...");
 	      conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	      System.out.println("Connected database successfully...");
-//	      DBTablePrinter.printTable(conn, "Boat");
+
 	      stmt = conn.createStatement();
 	      ResultSet rs = stmt.executeQuery("SELECT * FROM Boat");
 	      System.out.println("========================================");
@@ -40,20 +48,6 @@ public class JdbcSelect {
 	            System.out.println(id+"          "+name+"              "+cap);
 	         }
 	     
-//	      //STEP 5: Extract data from result set
-//	         int id;
-//	         String name=null;
-//	         int cap;
-//	         while(rs.next()){
-//	         //Retrieve by column name
-//	         id  = rs.getInt(2);
-//	         name = rs.getString(1);
-//	         cap = rs.getInt(3);
-//	         
-//
-//	         //Display values
-//	         System.out.println(  id+"   "  + name +"      " + cap);
-//	         System.out.println(", Last: " + last);
 
 	      rs.close();
 	   }catch(SQLException se){
@@ -77,4 +71,112 @@ public class JdbcSelect {
 	      }//end finally try
 	   }//end try
 
-}}
+}
+
+	public static void updatecap(int id) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		   Statement stmt = null;
+		   try{
+		      //STEP 2: Register JDBC driver
+		      Class.forName("com.mysql.cj.jdbc.Driver");
+
+		      //STEP 3: Open a connection
+		      System.out.println("Connecting to a selected database...");
+		      con = DriverManager.getConnection(DB_URL, USER, PASS);
+		      System.out.println("Connected database successfully...");
+//		      DBTablePrinter.printTable(conn, "Boat");
+		      stmt = con.createStatement();
+		      ResultSet rs = stmt.executeQuery("SELECT * FROM Boat where ID="+id);
+
+		      int id1 = 0,cap = 0;
+		      String name = null;
+		         while (rs.next()) {
+		        	 
+		            id1 = rs.getInt("ID");
+		            name = rs.getString("Boat_name");
+		            cap = rs.getInt("capacity");
+		            
+		         }
+		   Boat bt=new Boat(id1,name,cap);
+		   bt.setBoatCapacity(cap);
+		   Boat b1=new Boat();
+		   bid1=b1.getBoatNumber();
+		   ca=b1.getBoatCapacity();
+		   bname=b1.getBoatName();
+		   rs.close();
+	   }catch(SQLException se){
+	      //Handle errors for JDBC
+	      se.printStackTrace();
+	   }catch(Exception e){
+	      //Handle errors for Class.forName
+	      e.printStackTrace();
+	   }finally{
+	      //finally block used to close resources
+	      try{
+	         if(stmt!=null)
+	            con.close();
+	      }catch(SQLException se){
+	      }// do nothing
+	      try{
+	         if(con!=null)
+	            con.close();
+	      }catch(SQLException se){
+	         se.printStackTrace();
+	      }//end finally try
+	   }//end try
+		
+	}
+
+	public static ArrayList<bills> bill(int id) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		   Statement stmt = null;
+		   try{
+		      //STEP 2: Register JDBC driver
+		      Class.forName("com.mysql.cj.jdbc.Driver");
+
+		      //STEP 3: Open a connection
+		      con = DriverManager.getConnection(DB_URL, USER, PASS);
+		      stmt = con.createStatement();
+		      ResultSet rs = stmt.executeQuery("SELECT * FROM bills where Boat_ID="+id);
+		      ArrayList<bills>bill = new ArrayList<>();
+		  		while (rs.next()) {
+		  		          bills b = new bills(rs.getInt(1), rs.getInt(2),rs.getInt(3), rs.getString(4));
+		  		          bill.add(b);
+		  		}
+		  		      return bill;
+		  		   
+		   
+//		   int amt=Receipt.bill(t,ca);
+//			Receipt.display(b,t,bid1,ca,bname,amt,st);
+		   
+	   }catch(SQLException se){
+	      //Handle errors for JDBC
+	      se.printStackTrace();
+	   }catch(Exception e){
+	      //Handle errors for Class.forName
+	      e.printStackTrace();
+	   }finally{
+	      //finally block used to close resources
+	      try{
+	         if(stmt!=null)
+	            con.close();
+	      }catch(SQLException se){
+	      }// do nothing
+	      try{
+	         if(con!=null)
+	            con.close();
+	      }catch(SQLException se){
+	         se.printStackTrace();
+	      }//end finally try
+	   }//end try
+		return null;
+		
+			
+	}
+	
+	
+
+
+	}
